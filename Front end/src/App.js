@@ -1,8 +1,12 @@
+import {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { Button, Form } from 'react-bootstrap';
+import PrimerFormulario from './componentes/PrimerFormulario';
 
 function App() {
+const [personaNombre, setPersona] = useState("Nombre");
+
   return (
     <div className="App">
       <header className="App-header">
@@ -18,9 +22,7 @@ function App() {
         >
          Learn React
         </a>
-        <Form.Label>texto que quieres</Form.Label>
-        <Form.Control></Form.Control>
-        <Button variant="primary">Primary</Button>{''}
+        <PrimerFormulario personaNombre={personaNombre} />
 
       </header>
     </div>
