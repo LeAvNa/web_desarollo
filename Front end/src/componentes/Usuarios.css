@@ -1,0 +1,11 @@
+@import url('https://cdn.syncfusion.com/ej2/material.css');
+
+.Usuarios{
+    background: black;
+}
+
+.ag-style{
+    height: 500px;
+    width: 100%;
+
+}

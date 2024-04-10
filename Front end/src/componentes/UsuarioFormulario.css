@@ -1,0 +1,21 @@
+.tabla {
+    border-radius: 25px;
+    margin: auto;
+    text-align: center;
+    display: center;
+}
+
+.titulo {
+    text-align: center;
+    font-weight: bold;
+    display: center;
+    margin: auto;
+   
+}
+
+.registro {
+    font-weight: bold;
+    font-size: 18px;
+    text-align: center;
+
+}
