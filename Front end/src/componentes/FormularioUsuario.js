@@ -1,33 +1,39 @@
- import { Button, Form, Col, Row, Card, CardBody, CardFooter, FormLabel } from 'react-bootstrap';
+import { Button, Form, Col, Row, Card, CardBody, CardFooter, FormLabel } from 'react-bootstrap';
 import './UsuarioFormulario.css';
+import MostrarTablas from './MostrarTablas';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function FormularioUsuario() {
+
+    function Click(){
+        <MostrarTablas boolean = {false} />
+        window.location.href = window.location.href;
+    }
 
     return (
         <Form>
             <Card className="tabla">
                 <CardFooter>
                     <Col>
-                    <FormLabel size="lg" className="registro">Registro de Usuario</FormLabel>
+                        <FormLabel size="lg" className="registro">Registro de Usuario</FormLabel>
                     </Col>
                 </CardFooter>
 
                 <CardBody>
                     <Row>
-                        <Col lg={6} sm={12} XL={6} classname= "columna">
+                        <Col lg={6} sm={12} XL={6} classname="columna">
                             <FormLabel>Nombre: </FormLabel>
                         </Col>
                         <Col lg={6} sm={12} XL={6}>
                             <Form.Control type="text"></Form.Control>
                         </Col>
                     </Row>
-                    
+
                     <Row><br /></Row>
 
                     <Row>
                         <Col lg={6} sm={12} XL={6}>
-                        <FormLabel>Primer Apellido: </FormLabel>
+                            <FormLabel>Primer Apellido: </FormLabel>
                         </Col>
                         <Col lg={6} sm={12} XL={6}>
                             <Form.Control type="text"></Form.Control>
@@ -81,9 +87,15 @@ function FormularioUsuario() {
                 </CardBody>
 
                 <CardFooter>
-                    <Col>
-                        <Button variant="primary">Guardar</Button>
-                    </Col>
+                    <Row>
+                        <Col>
+                            <Button variant="primary">Guardar</Button>
+                        </Col>
+                        <Col>
+                            <Button onClick={Click}>Cancelar</Button>
+                        </Col>
+                    </Row>
+
                 </CardFooter>
             </Card>
         </Form>

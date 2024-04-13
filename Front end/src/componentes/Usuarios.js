@@ -1,140 +1,129 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.min.js';
 import './Usuarios.css';
-import data from './Usuarios.json';
-import { Form } from 'react-bootstrap';
-import { useEffect, useState } from 'react';
-import { AgGridColumn, AgGridReact, AgReactComponent } from 'ag-grid-react'; //AG Grid Component
-import { GridComponent, ColumnDirective, ColumnsDirective } from '@syncfusion/ej2-react-grids';
-import { registerLicense } from '@syncfusion/ej2-base';
-import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
-import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the grid
+import 'react-data-grid/lib/styles.css';
+import DataGrid from 'react-data-grid';
 
-registerLicense('Ngo9BigBOggjHTQxAR8/V1NBaF5cXmRCekx0THxbf1x0ZFdMYFlbRHdPIiBoS35RckVgWn9fdHRQQmZcV0Z3');
 function Usuarios() {
 
-    // Row Data: The data to be displayed.
-    // const [rowData, setRowData] = useState([
-    //     { ID: "Tesla", Nombre: "Model Y", PrimerApellido: 64950, SegundoApellido: true },
-    //     { make: "Ford", model: "F-Series", price: 33850, electric: false },
-    //     { make: "Toyota", model: "Corolla", price: 29600, electric: false },
-    // ]);
+    const usuarios=[
+        {
+          "id": 1,
+          "Nombre": "Juan",
+          "PrimerApellido": "González",
+          "SegundoApellido": "Pérez",
+          "Correo": "juan.gonzalez@example.com",
+          "Telefono": "123456789",
+          "NombredeUsuario": "juang"
+        },
+        {
+          "id": 2,
+          "Nombre": "María",
+          "PrimerApellido": "López",
+          "SegundoApellido": "García",
+          "Correo": "maria.lopez@example.com",
+          "Telefono": "987654321",
+          "NombredeUsuario": "marial"
+        },
+        {
+          "id": 3,
+          "Nombre": "Carlos",
+          "PrimerApellido": "Martínez",
+          "SegundoApellido": "Rodríguez",
+          "Correo": "carlos.martinez@example.com",
+          "Telefono": "456789123",
+          "NombredeUsuario": "carlosm"
+        },
+        {
+          "id": 4,
+          "Nombre": "Ana",
+          "PrimerApellido": "Fernández",
+          "SegundoApellido": "López",
+          "Correo": "ana.fernandez@example.com",
+          "Telefono": "741852963",
+          "NombredeUsuario": "anaf"
+        },
+        {
+          "id": 5,
+          "Nombre": "Pedro",
+          "PrimerApellido": "Sánchez",
+          "SegundoApellido": "Martínez",
+          "Correo": "pedro.sanchez@example.com",
+          "Telefono": "369258147",
+          "NombredeUsuario": "pedros"
+        },
+        {
+          "id": 6,
+          "Nombre": "Laura",
+          "PrimerApellido": "Díaz",
+          "SegundoApellido": "Fernández",
+          "Correo": "laura.diaz@example.com",
+          "Telefono": "852147963",
+          "NombredeUsuario": "laurad"
+        },
+        {
+          "id": 7,
+          "Nombre": "Javier",
+          "PrimerApellido": "Pérez",
+          "SegundoApellido": "Sánchez",
+          "Correo": "javier.perez@example.com",
+          "Telefono": "951753852",
+          "NombredeUsuario": "javierp"
+        },
+        {
+          "id": 8,
+          "Nombre": "Sara",
+          "PrimerApellido": "García",
+          "SegundoApellido": "Martínez",
+          "Correo": "sara.garcia@example.com",
+          "Telefono": "753951852",
+          "NombredeUsuario": "sarag"
+        },
+        {
+          "id": 9,
+          "Nombre": "Miguel",
+          "PrimerApellido": "Hernández",
+          "SegundoApellido": "Sánchez",
+          "Correo": "miguel.hernandez@example.com",
+          "Telefono": "159753852",
+          "NombredeUsuario": "miguelh"
+        },
+        {
+          "id": 10,
+          "Nombre": "Lucía",
+          "PrimerApellido": "Martín",
+          "SegundoApellido": "Pérez",
+          "Correo": "lucia.martin@example.com",
+          "Telefono": "852963741",
+          "NombredeUsuario": "luciam"
+        },
+        {
+          "id": 11,
+          "Nombre": "Daniel",
+          "PrimerApellido": "Jiménez",
+          "SegundoApellido": "Gómez",
+          "Correo": "daniel.jimenez@example.com",
+          "Telefono": "369147258",
+          "NombredeUsuario": "danield"
+        }
+      ];
 
-    // Column Definitions: Defines the columns to be displayed.
-    const [colDefs] = useState([
-        { field: "id" },
-        { field: "Nombre" },
-        { field: "PrimerApellido" },
-        { field: "SegundoApellido" },
-        { field: "Corrreo" },
-        { field: "Telefono" },
-        { field: "NombredeUsuario" }
-    ]);
-
-    const [gridApi] = useState();
-    fetch('./Usuarios.json').then(function (response) {
-        return response.json();
-    }).then(function (data) {
-        gridApi.setGridOption('rowData', data);
-    })
-
-    fetch('./Usuarios.json').
-    then(function (response) {
-
-        return response.json();
-
-    }).then(function (data) {
-
-        // set the column headers from the data
-
-        const colDefs = gridOptions.api.getColumnDefs();
-        colDefs.length=0;
-        const keys = Object.keys(data[0])
-        keys.forEach(key => colDefs.push({field : key}));
-        gridOptions.api.setGridOption('columnDefs', colDefs);
-
-        // add the data to the grid
-        gridOptions.api.setRowData('rowData', data);
-    })
-
-    const columnDefs = [
-
+    const columns = [
+        { key: 'id', name: 'ID' },
+        { key: 'Nombre', name: 'Nombre' },
+        { key: 'PrimerApellido', name: 'Primer Apellido' },
+        { key: 'SegundoApellido', name: 'Segundo Apellido' },
+        { key: 'Correo', name: 'Correo' },
+        { key: 'Telefono', name: 'Teléfono' },
+        { key: 'NombredeUsuario', name: 'Nombre de Usuario' },
     ];
 
-    const gridOptions = {
-        columnDefs : columnDefs,
-        enableSorting: true,
-        enableFilter: true,
-        pagination: true
-    };
 
-    fetch(data).then(function (response){
-        return response.json();
-    }).then(function (data){
-        const colDefs = gridOptions.api.getColumnDefs();
-        colDefs.length=0;
-        const keys = Object.keys(data[0]);
-        keys.forEach(key => colDefs.push({field: key}));
-        gridOptions.api.setColumnDefs(colDefs);
 
-        gridOptions.api.setRowdata(data);
-    })
 
-    const [setRowData] = useState([]);
-    const [rowData] = useState([
-        useEffect(() => {
-            fetch(data)
-                .then(res => res.json())
-                .then(result => setRowData(result.data));
-        }, [])
-    ]);
 
-    
-
-    
 
     return (
-        <div>
-            <div style={{ margin: '10%', marginTop: '5%' }}>
-                <GridComponent dataSource={data}>
-                    <ColumnsDirective>
-                        <ColumnDirective field='id' headerText='ID' textAlign='Right' width ='100' />
-                        <ColumnDirective field='Nombre' headerText='Nombre' textAlign='Right' width ='100' />
-                        <ColumnDirective field='PrimerApellido' headerText='Primer Apellido' textAlign='Right' width ='100' />
-                        <ColumnDirective field='SegundoApellido' headerText='Segundo Apellido' textAlign='Right' width ='100' />
-                        <ColumnDirective field='Correo' headerText='Correo' textAlign='Right' width ='100' />
-                        <ColumnDirective field='Telefono' headerText='Telefono' textAlign='Right' width ='100' />
-                        <ColumnDirective field='NombredeUsuario' headerText='Nombre de Usuario' textAlign='Right' width ='100' />
-                    </ColumnsDirective> 
-                </GridComponent>
-            </div>
-
-            <div className='Usuarios'>
-                <h2>a</h2>
-                <div className="ag-theme-alpine ag-style">
-                    
-                    <AgGridReact
-                        rowData={rowData}
-                        columnDefs={colDefs}
-                    />
-                </div>
-            </div>
-        // wrapping container with theme & size
-            <Form
-                className="ag-theme-quartz" //applying the grid theme
-                style={{ height: 500 }} // the grid will fill the size of the parent container
-            >
-
-
-                <AgGridReact
-                rowData={rowData}
-                columnDefs={colDefs}
-                />
-            </Form>
-        </div>
-
-
-
+        <DataGrid columns={columns} rows={usuarios} />
     )
 }
 

@@ -1,11 +1,8 @@
 //import { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { Button, Form } from 'react-bootstrap';
 // import PrimerFormulario from './componentes/PrimerFormulario';
-import FormularioUsuario from './componentes/FormularioUsuario';
-import Usuarios from './componentes/Usuarios';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import MostrarTablas from './componentes/MostrarTablas';
 
 
 function App() {
@@ -31,8 +28,7 @@ function App() {
       </header>
       <br />
       <div className="FormularioUsuario">
-        <FormularioUsuario />
-        <Usuarios />
+        <MostrarTablas />
       </div>
 
     </div>
