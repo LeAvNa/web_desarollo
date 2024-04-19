@@ -3,10 +3,23 @@ import logo from './logo.svg';
 import './App.css';
 // import PrimerFormulario from './componentes/PrimerFormulario';
 import MostrarTablas from './componentes/MostrarTablas';
-
+import Prueba from './componentes/Prueba';
+import axios from 'axios';
+import { Button } from 'react-bootstrap';
 
 function App() {
   // const [personaNombre, setPersona] = useState("Nombre");
+
+  function click(){
+    axios.get('https://jsonplaceholder.typicode.com/posts')
+    .then (response =>{
+      console.log(response.data);
+    })
+    .catch(error => {
+      console.error('Error fetching data: ', error);
+    });
+
+  }
 
   return (
     <div className="App">
@@ -28,7 +41,10 @@ function App() {
       </header>
       <br />
       <div className="FormularioUsuario">
+        <Button onClick={click}>Imprimir en consola</Button>
         <MostrarTablas />
+        {/* <Prueba /> */}
+
       </div>
 
     </div>
