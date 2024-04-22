@@ -1,14 +1,30 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './Usuarios.css';
-import 'react-data-grid/lib/styles.css';
-import DataGrid from 'react-data-grid';
-import axios from 'axios';
-import { Button } from 'react-bootstrap';
 import { useState } from 'react';
+import { AgGridReact } from 'ag-grid-react'; // AG Grid Component
+import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
+import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the grid
+
 
 export default function Usuarios() {
 
-  const usuarios = [
+
+
+  // // function click() {
+  // //   axios.get('https://jsonplaceholder.typicode.com/posts')
+  // //     .then(response => {
+  // //       response = (response.data)
+  // //       console.log(response)
+  // //       setRows(response)
+  // //       console.log(rows)
+  // //     })
+  // //     .catch(error => {
+  // //       console.error('Error fetching data: ', error);
+  // //     }); 
+
+  // // }
+
+  // Row Data: The data to be displayed.
+  const [rowData, setRowData] = useState([
     {
       "id": 1,
       "Nombre": "Juan",
@@ -108,54 +124,36 @@ export default function Usuarios() {
       "Telefono": "369147258",
       "NombredeUsuario": "danield"
     }
-  ];
-
-  const columns = [
-    { key: 'id', name: 'ID' },
-    { key: 'Nombre', name: 'Nombre' },
-    { key: 'PrimerApellido', name: 'Primer Apellido' },
-    { key: 'SegundoApellido', name: 'Segundo Apellido' },
-    { key: 'Correo', name: 'Correo' },
-    { key: 'Telefono', name: 'Teléfono' },
-    { key: 'NombredeUsuario', name: 'Nombre de Usuario' },
-  ];
-
-  const columns1 = [
-    { key: 'userId', name: 'userId' },
-    { key: 'id', name: 'id' },
-    { key: 'title', name: 'title' },
-    { key: 'body', name: 'body' }
-  ];
-
-
-  const [rows, setRows] = useState([]);
-
-
-  function click() {
-    axios.get('https://jsonplaceholder.typicode.com/posts')
-      .then(response => {
-        response = (response.data)
-        console.log(response)
-        setRows(response)
-        console.log(rows)
-      })
-      .catch(error => {
-        console.error('Error fetching data: ', error);
-      }); 
-      
-  }
+  ]);
 
 
 
+  // Column Definitions: Defines the columns to be displayed.
+  const [colDefs, setColDefs] = useState([
+    { field: 'id', headerName: 'ID' },
+    { field: 'Nombre', headerName: 'Nombre' },
+    { field: 'PrimerApellido', headerName: 'Primer Apellido' },
+    { field: 'SegundoApellido', headerName: 'Segundo Apellido' },
+    { field: 'Correo', headerName: 'Correo' },
+    { field: 'Telefono', headerName: 'Teléfono' },
+    { field: 'NombredeUsuario', headerName: 'Nombre de Usuario' },
+  ]);
 
+  // ...
 
 
   return (
-    <div>
-      <Button onClick={click}>Actualizar</Button>
-      <DataGrid columns={columns1} rows={rows} />
+    // wrapping container with theme & size
+    <div
+      className="ag-theme-quartz" // applying the grid theme
+      style={{ height: 500 }} // the grid will fill the size of the parent container
+    >
+      <AgGridReact
+        rowData={rowData}
+        columnDefs={colDefs}
+        rowSelection={'single'}
+      />
     </div>
-
   )
-}
 
+}
