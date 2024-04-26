@@ -140,13 +140,16 @@ export default function Usuarios() {
 
   // Column Definitions: Defines the columns to be displayed.
   const [colDefs, setColDefs] = useState([
-    { field: 'id', headerName: 'ID' },
-    { field: 'Nombre', headerName: 'Nombre' },
-    { field: 'PrimerApellido', headerName: 'Primer Apellido' },
-    { field: 'SegundoApellido', headerName: 'Segundo Apellido' },
-    { field: 'Correo', headerName: 'Correo' },
-    { field: 'Telefono', headerName: 'Teléfono' },
-    { field: 'NombredeUsuario', headerName: 'Nombre de Usuario' },
+    { field: 'idUsuario', headerName: 'ID' },
+    { field: 'nombre', headerName: 'Nombre' },
+    { field: 'primerApellido', headerName: 'Primer Apellido' },
+    { field: 'segundoApellido', headerName: 'Segundo Apellido' },
+    { field: 'fechaNacimiento', headerName: 'Fecha de Nacimiento' },
+    { field: 'nombreUsuario', headerName: 'Nombre de Usuario' },
+    { field: 'contraseña', headerName: 'Contraseña' },
+    { field: 'habilitado', headerName: 'Habilitado' },
+    { field: 'nombreCompleto', headerName: 'Nombre Completo' },
+    { field: 'strFechaNacimiento', headerName: 'strFechaNacimiento' },
   ]);
 
   // ...
