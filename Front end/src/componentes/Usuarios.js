@@ -9,7 +9,9 @@ import { getUsers } from '../redux/actions/actionUsers';
 export default function Usuarios() {
 
   const dispatch = useDispatch();
-  const { usuarios } = useSelector((state) => state.getUsers);
+  // const { users } = useSelector((state) => state.getUsers);
+  const { users } = useSelector((state) => state.listUsers);
+  
 
   useEffect(()=> {
     dispatch(getUsers());
@@ -31,6 +33,8 @@ export default function Usuarios() {
 
   // ...
 
+  const getRowId = params => params.data.id;
+
   return (
     // wrapping container with theme & size
     <div
@@ -38,9 +42,10 @@ export default function Usuarios() {
       style={{ height: 500 }} // the grid will fill the size of the parent container
     >
       <AgGridReact
-        rowData={usuarios}
+        rowData={users}
         columnDefs={colDefs}
         rowSelection={'single'}
+        getRowId={getRowId}
       />
     </div>
   )
