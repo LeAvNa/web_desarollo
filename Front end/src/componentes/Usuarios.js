@@ -10,11 +10,12 @@ export default function Usuarios() {
 
   const dispatch = useDispatch();
   // const { users } = useSelector((state) => state.getUsers);
-  const { users } = useSelector((state) => state.listUsers);
+  const { users } = useSelector((state) => state.getUsers);
   
 
   useEffect(()=> {
     dispatch(getUsers());
+    console.log(users);
   }, [dispatch]);
 
   // Column Definitions: Defines the columns to be displayed.

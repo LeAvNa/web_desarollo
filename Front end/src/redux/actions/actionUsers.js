@@ -14,13 +14,14 @@ import axios from "axios";
 // );
 
 export const getUsers = createAsyncThunk("users/getUsers",
-async({rejectWithValue}) => {
+async() => {
     try{
         const resp = await axios.get('http://187.189.158.186:7777/Usuario');
-        return resp.data
+        console.log(resp);
+        return resp.data;
     }catch(error)
     {
-        return rejectWithValue('Error:,${error.message}');
+        return null;
     }
 }
 );
