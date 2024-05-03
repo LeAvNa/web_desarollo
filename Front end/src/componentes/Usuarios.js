@@ -2,7 +2,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useState, useRef, useCallback } from 'react';
 import * as React from "react";
 import { useDispatch, useSelector, useStore } from 'react-redux';
-import { Button, Col, Row } from "react-bootstrap";
+import { Button, Col, Row, FormLabel } from "react-bootstrap";
 import { AgGridReact } from 'ag-grid-react'; // AG Grid Component
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the grid
@@ -26,7 +26,7 @@ export default function Usuarios({showForm, idUserEdit}) {
     const selectedRows = gridRef.current.api.getSelectedRows();
     document.querySelector("#selectedRows").innerHTML =
       selectedRows.length === 1 ? selectedRows[0].nombre : "";
-    // console.log(selectedRows[0].idUsuario);
+    console.log(selectedRows[0].idUsuario);
     setId(selectedRows[0].idUsuario);
     console.log(id)
     
@@ -102,7 +102,7 @@ const handleDelete = () => {
         </Col>
       </Row>
       <div>
-        Usuario seleccionado:
+        <FormLabel>Usuario seleccionado: </FormLabel>
         <span id="selectedRows"></span>
       </div>
       <AgGridReact
