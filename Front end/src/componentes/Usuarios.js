@@ -1,24 +1,31 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useEffect, useState, useRef, useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector, useStore } from 'react-redux';
 import { AgGridReact } from 'ag-grid-react'; // AG Grid Component
 import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied to the grid
-import { getUsers } from '../redux/actions/actionUsers';
+import { getUsers, getUserUnique } from '../redux/actions/actionUsers';
 
 export default function Usuarios() {
 
+  // Rellenar grid con datos
   const dispatch = useDispatch();
-  // const { users } = useSelector((state) => state.getUsers);
   const { users } = useSelector((state) => state.getUsers);
 
+
+  // Obtener la id del usuario. 
+  var [id] = useState();
   const gridRef = useRef();
   const onSelectionChanged = useCallback(() => {
     const selectedRows = gridRef.current.api.getSelectedRows();
     document.querySelector("#selectedRows").innerHTML =
-      selectedRows.length === 1 ? selectedRows[0].idUsuario : "";
-      console.log(selectedRows)
+      selectedRows.length === 1 ? selectedRows[0].nombre : "";
+    console.log(selectedRows[0].idUsuario);
+    id = selectedRows[0].idUsuario;
+    console.log(id)
   }, []);
+
+
 
   useEffect(() => {
     dispatch(getUsers());
@@ -39,12 +46,9 @@ export default function Usuarios() {
     { field: 'strFechaNacimiento', headerName: 'Fecha de Nacimiento' },
   ]);
 
+
+
   // ...
-
-  const getRowId = params => params.data.id;
-  function GetRowNode() {
-
-  }
 
   return (
 
@@ -54,7 +58,7 @@ export default function Usuarios() {
       style={{ height: 500 }} // the grid will fill the size of the parent container
     >
       <div>
-        Selection:
+        Usuario seleccionado:
         <span id="selectedRows"></span>
       </div>
       <AgGridReact
@@ -62,7 +66,6 @@ export default function Usuarios() {
         rowData={users}
         columnDefs={colDefs}
         rowSelection={"single"}
-        getRowId={getRowId}
         onSelectionChanged={onSelectionChanged}
       />
     </div>

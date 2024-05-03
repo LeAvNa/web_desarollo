@@ -22,6 +22,17 @@ function FormularioUsuario() {
                 <CardBody>
                     <Row>
                         <Col lg={6} sm={12} XL={6} classname="columna">
+                            <FormLabel>ID: </FormLabel>
+                        </Col>
+                        <Col lg={6} sm={12} XL={6}>
+                            <Form.Control type="text"></Form.Control>
+                        </Col>
+                    </Row>
+
+                    <Row><br /></Row>
+
+                    <Row>
+                        <Col lg={6} sm={12} XL={6}>
                             <FormLabel>Nombre: </FormLabel>
                         </Col>
                         <Col lg={6} sm={12} XL={6}>
@@ -55,6 +66,17 @@ function FormularioUsuario() {
 
                     <Row>
                         <Col lg={6} sm={12} XL={6}>
+                            <FormLabel>Fecha de Nacimiento: </FormLabel>
+                        </Col>
+                        <Col lg={6} sm={12} XL={6}>
+                            <Form.Control type="text"></Form.Control>
+                        </Col>
+                    </Row>
+
+                    <Row><br /></Row>
+
+                    <Row>
+                        <Col lg={6} sm={12} XL={6}>
                             <FormLabel>Nombre de Usuario: </FormLabel>
                         </Col>
                         <Col lg={6} sm={12} XL={6}>
@@ -67,17 +89,6 @@ function FormularioUsuario() {
                     <Row>
                         <Col lg={6} sm={12} XL={6}>
                             <FormLabel>Contraseña: </FormLabel>
-                        </Col>
-                        <Col lg={6} sm={12} XL={6}>
-                            <Form.Control type="text"></Form.Control>
-                        </Col>
-                    </Row>
-
-                    <Row><br /></Row>
-
-                    <Row>
-                        <Col lg={6} sm={12} XL={6}>
-                            <FormLabel>Confirmar Contraseña: </FormLabel>
                         </Col>
                         <Col lg={6} sm={12} XL={6}>
                             <Form.Control type="text"></Form.Control>
