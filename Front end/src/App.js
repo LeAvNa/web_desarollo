@@ -2,7 +2,9 @@
 import logo from './logo.svg';
 import './App.css';
 // import PrimerFormulario from './componentes/PrimerFormulario';
+
 import MostrarTablas from './componentes/MostrarTablas';
+import Usuarios from './componentes/index';
 // import axios from 'axios';
 // import { Button } from 'react-bootstrap';
 
@@ -41,7 +43,8 @@ function App() {
       <br />
       <div className="FormularioUsuario">
         {/* <Button onClick={click}>Imprimir en consola</Button> */}
-        <MostrarTablas />
+        {/* <MostrarTablas /> */}
+        <Usuarios />
         {/* <Prueba /> */}
 
       </div>

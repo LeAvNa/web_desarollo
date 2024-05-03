@@ -2,12 +2,16 @@ import { Button, Form, Col, Row, Card, CardBody, CardFooter, FormLabel } from 'r
 import './UsuarioFormulario.css';
 import MostrarTablas from './MostrarTablas';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { useDispatch } from 'react-redux';
+import { getUserUnique } from '../../../redux/actions/actionUsers';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import React, { useState, useEffect } from 'react';
 
-function FormularioUsuario() {
+function FormularioUsuario({showForm, id}) {
 
     function Click(){
-        <MostrarTablas boolean = {false} />
-        window.location.href = window.location.href;
+        showForm();
     }
 
     return (
