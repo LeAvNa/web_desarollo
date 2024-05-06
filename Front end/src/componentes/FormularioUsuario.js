@@ -5,32 +5,30 @@ import { useDispatch } from 'react-redux';
 import { getUserUnique } from '../redux/actions/actionUsers';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import React, { useState, useEffect } from 'react';
-import { addUser } from '../redux/actions/actionUsers';
+import React, { useState, useEffect, useSyncExternalStore } from 'react';
+import { addUser, editUSer } from '../redux/actions/actionUsers';
+import { useTransition } from 'react';
 
 function FormularioUsuario({ showForm, id }) {
 
     const initialUserState = {
-        idUsuario: '1',
-        idRol: '0', // Se inicializa como string para que coincida con el valor de las opciones
-        nombre: 'Fabian',
-        primerApellido: 'Paredes',
-        segundoApellido: 'Soto',
-        nombreUsuario: 'Antonimo',
-        fechaNacimiento: new Date(), // Puedes inicializar la fecha a la actual o alguna otra
-        contrasena: '123'
-        
+        IDUsuario: 0,
+        Nombre: '',
+        PrimerApellido: '',
+        SegundoApellido: '',
+        Genero: null,
+        Correo: '',
+        FechaNacimiento: '',
+        Telefono: '',
+        IDRol: 0,
+        NombreUsuario: '',
+        Contraseña: '',
+        ConfirmarContraseña: '',
+        Habilitado: true
     };
-    // const [id , setId] = useState('');
-    const [nombre, setNombre] = useState('');
-    const [primerApellido, setPrimerApellido] = useState('');
-    const [segundoApellido, setSegundoApellido] = useState('');
-    const [fechaNacimiento, setFechaNacimiento] = useState('');
-    const [nombreUsuario, setNombreUsuario] = useState('');
-    const [contraseña, setContraseña] = useState('');
 
     const dispatch = useDispatch();
-    const [user, setUser] = useState(initialUserState);
+    const [user, setUser] = useState({initialUserState});
 
     useEffect(() => {
         if (id > 0) {
@@ -38,25 +36,8 @@ function FormularioUsuario({ showForm, id }) {
                 .then((response) => {
                     setUser(response.payload);
                 });
-        } else {
-            setUser(initialUserState);
         }
-    }, [dispatch, id, initialUserState]);
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setUser(prevState => ({
-            ...prevState,
-            [name]: value
-        }));
-    };
-
-    const handleDateChange = (date) => {
-        setUser(prevState => ({
-            ...prevState,
-            fechaNacimiento: date
-        }));
-    };
+    }, [dispatch, id]);
 
     const handleCancel = () => {
         setUser(initialUserState);
@@ -64,16 +45,28 @@ function FormularioUsuario({ showForm, id }) {
     };
 
     const handleGuardar = () => {
-        // Aquí deberías realizar las acciones necesarias para guardar el usuario
-        addUser(user);
-        console.log(id);
-        console.log(user);
+        if(user.Contraseña === user.ConfirmarContraseña){
+            dispatch(addUser(user)).then(() => {
+                console.log('Usuario guardado');
+            });
+        }
     };
 
+    const handleEditar = () => {
+        if(id > 0){
+            if(user.Contraseña === user.ConfirmarContraseña){
+                dispatch(editUSer(id, user)).then(() => {
+                    console.log('Usuario editado');
+                });
+            }
+        }else{
+            alert('No se puede editar usuario');
+        }
+        
+    };
 
-
-    function Click() {
-        showForm();
+    function Click(){
+        console.log(id)
     }
 
     return (
@@ -87,37 +80,33 @@ function FormularioUsuario({ showForm, id }) {
 
                 <CardBody>
                     <Row>
-                        <Col lg={6} sm={12} XL={6} className="columna">
-                            <FormLabel>ID: </FormLabel>
+                        <Col lg={5} sm={12} xl={6}>
+                            <Form.Label>ID : </Form.Label>
                         </Col>
-                        <Col lg={6} sm={12} XL={6}>
+                        <Col lg={7} sm={12} xl={6}>
                             <Form.Control
-                                type="text"
+                                type="int"
                                 name="idUsuario"
-                                id="idUsuario"
-                                value={user.idUsuario}
-                                onChange={handleChange}
+                                value={user.IDUsuario}
+                                onChange={(e) => setUser({ ...user, IDUsuario: e.target.value })}
                             />
                         </Col>
                     </Row>
-
-                    <Row><br /></Row>
-
+                    <br />
                     <Row>
                         <Col lg={5} sm={12} xl={6}>
                             <Form.Label>Nombre : </Form.Label>
                         </Col>
                         <Col lg={7} sm={12} xl={6}>
                             <Form.Control
-                                type="text"
+                                type="string"
                                 name="nombre"
-                                value={user.nombre}
-                                onChange={handleChange}
+                                value={user.Nombre}
+                                onChange={(e) => setUser({ ...user, Nombre: e.target.value })}
                             />
                         </Col>
                     </Row>
-
-                    <Row><br /></Row>
+                    <br />
 
                     <Row>
                         <Col lg={5} sm={12} xl={6}>
@@ -125,10 +114,10 @@ function FormularioUsuario({ showForm, id }) {
                         </Col>
                         <Col lg={7} sm={12} xl={6}>
                             <Form.Control
-                                type="text"
+                                type="string"
                                 name="primerApellido"
-                                value={user.primerApellido}
-                                onChange={handleChange}
+                                value={user.PrimerApellido}
+                                onChange={(e) => setUser({ ...user, PrimerApellido: e.target.value })}
                             />
                         </Col>
                     </Row>
@@ -140,14 +129,30 @@ function FormularioUsuario({ showForm, id }) {
                         </Col>
                         <Col lg={7} sm={12} xl={6}>
                             <Form.Control
-                                type="text"
+                                type="string"
                                 name="segundoApellido"
-                                value={user.segundoApellido}
-                                onChange={handleChange}
+                                value={user.SegundoApellido}
+                                onChange={(e) => setUser({ ...user, SegundoApellido: e.target.value })}
                             />
                         </Col>
                     </Row>
+                    <br />
 
+                    <Row>
+                        <Col lg={5} sm={12} xl={6}>
+                            <Form.Label>Genero: </Form.Label>
+                        </Col>
+                        <Col lg={7} sm={12} xl={6}>
+                            <Form.Select
+                                name="genero"
+                                value={user.Genero}
+                                onChange={(e) => setUser({ ...user, Genero: e.target.value == 1 ? true : false })}>
+                                <option value={""} disabled>Seleccione un Genero</option>
+                                <option value={1}>Masculino</option>
+                                <option value={2}>Femenino</option>
+                            </Form.Select>
+                        </Col>
+                    </Row>
                     <br />
 
                     <Row>
@@ -156,23 +161,54 @@ function FormularioUsuario({ showForm, id }) {
                         </Col>
                         <Col lg={7} sm={12} xl={6}>
                             <DatePicker
+                                name='fechaNacimiento'
                                 className='form-control'
-                                selected={user.fechaNacimiento}
-                                onChange={handleDateChange}
+                                selected={user.FechaNacimiento}
+                                onChange={(date) => setUser({ ...user, FechaNacimiento: date })}
                             />
                         </Col>
                     </Row>
-                    
                     <br />
 
-                    
+                    <Row>
+                        <Col lg={5} sm={12} xl={6}>
+                            <Form.Label>Correo: </Form.Label>
+                        </Col>
+                        <Col lg={7} sm={12} xl={6}>
+                            <Form.Control
+                                type='string'
+                                name="correo"
+                                value={user.Correo}
+                                onChange={(e) => setUser({ ...user, Correo: e.target.value })}
+                            />
+                        </Col>
+                    </Row>
+                    <br />
+
+                    <Row>
+                        <Col lg={5} sm={12} xl={6}>
+                            <Form.Label>Telefono: </Form.Label>
+                        </Col>
+                        <Col lg={7} sm={12} xl={6}>
+                            <Form.Control
+                                type='string'
+                                name="telefono"
+                                value={user.Telefono}
+                                onChange={(e) => setUser({ ...user, Telefono: e.target.value })}
+                            />
+                        </Col>
+                    </Row>
+                    <br />
 
                     <Row>
                         <Col lg={5} sm={12} xl={6}>
                             <Form.Label>Rol: </Form.Label>
                         </Col>
                         <Col lg={7} sm={12} xl={6}>
-                            <Form.Select name="idRol" value={user.idRol} onChange={handleChange}>
+                            <Form.Select
+                                name="idRol"
+                                value={user.IDRol}
+                                onChange={(e) => setUser({ ...user, IDRol: parseInt(e.target.value) })}>
                                 <option value={"0"} disabled>Seleccione un Rol</option>
                                 <option value={"1"}>Administrador</option>
                                 <option value={"2"}>Usuario</option>
@@ -187,10 +223,10 @@ function FormularioUsuario({ showForm, id }) {
                         </Col>
                         <Col lg={7} sm={12} xl={6}>
                             <Form.Control
-                                type="text"
+                                type="string"
                                 name="nombreUsuario"
-                                value={user.nombreUsuario}
-                                onChange={handleChange}
+                                value={user.NombreUsuario}
+                                onChange={(e) => setUser({ ...user, NombreUsuario: e.target.value })}
                             />
                         </Col>
                     </Row>
@@ -204,8 +240,8 @@ function FormularioUsuario({ showForm, id }) {
                             <Form.Control
                                 type="password"
                                 name="contrasena"
-                                value={user.contrasena}
-                                onChange={handleChange}
+                                value={user.Contraseña}
+                                onChange={(e) => setUser({ ...user, Contraseña: e.target.value })}
                             />
                         </Col>
                     </Row>
@@ -219,12 +255,28 @@ function FormularioUsuario({ showForm, id }) {
                             <Form.Control
                                 type="password"
                                 name="confirmarContrasena"
-                                value={user.confirmarContrasena}
-                                onChange={handleChange}
+                                value={user.ConfirmarContraseña}
+                                onChange={(e) => setUser({ ...user, ConfirmarContraseña: e.target.value })}
                             />
                         </Col>
                     </Row>
                     <br />
+
+                    <Row>
+                        <Col lg={5} sm={12} xl={6}>
+                            <Form.Label>Habilitado : </Form.Label>
+                        </Col>
+                        <Col lg={7} sm={12} xl={6}>
+                            <Form.Select
+                                name="habilitado"
+                                value={user.Habilitado}
+                                onChange={(e) => setUser({ ...user, Habilitado: e.target.value == 1 ? true : false })}>
+                                <option value={""} disabled>Seleccione un si</option>
+                                <option value={1}>True</option>
+                                <option value={2}>False</option>
+                            </Form.Select>
+                        </Col>
+                    </Row>
 
                 </CardBody>
 
@@ -235,6 +287,9 @@ function FormularioUsuario({ showForm, id }) {
                         </Col>
                         <Col>
                             <Button variant='danger' onClick={handleCancel} className='m-1'>Cancelar</Button>
+                        </Col>
+                        <Col>
+                            <Button variant='primary' onClick={handleEditar}>Editar Usuario</Button>
                         </Col>
                     </Row>
 

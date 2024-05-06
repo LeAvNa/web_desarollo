@@ -1,30 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import TablaUsuarios from './Usuarios';
+import FormUser from './FormularioUsuario';
+import TableUser from './Usuarios';
 import { useDispatch } from 'react-redux';
-import FormularioUsuario from './FormularioUsuario';
 
 function Usuarios() {
     const dispatch = useDispatch();
     const [showForm, setShowForm] = useState(false);
-    const [id, setUserEdit] = useState(0);
+    const [idUserEdit, setUserEdit] = useState(0);
 
     const showTable = () => {
         setShowForm(prevShowForm => !prevShowForm); // Utilizando el estado anterior
         if(showForm){
-            console.log(id)
-            setUserEdit(id);
+            setUserEdit(idUserEdit);
         }
     };
 
     useEffect(() => {
         
-    }, [dispatch, id]);
+    }, [dispatch, idUserEdit]);
 
     return (
         showForm ? (
-            <FormularioUsuario showForm={showTable} id={id}/>
+            <FormUser showForm={showTable} id={idUserEdit}/>
         ) : (
-            <TablaUsuarios showForm={showTable} idUserEdit={id => setUserEdit(id)}/>
+            <TableUser showForm={showTable} idUserEdit={id => setUserEdit(id)}/>
         )
     );
 }

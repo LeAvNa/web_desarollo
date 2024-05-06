@@ -9,18 +9,18 @@ import "ag-grid-community/styles/ag-theme-quartz.css"; // Optional Theme applied
 import { getUsers, deleteUser } from '../redux/actions/actionUsers';
 
 
-export default function Usuarios({showForm, idUserEdit}) {
+export default function Usuarios({ showForm, idUserEdit }) {
 
   const [userSelected, setUserSelected] = React.useState(false);
   const [selectedState, setSelectedState] = React.useState({});
-  
+
   // Rellenar grid con datos
   const dispatch = useDispatch();
   const { users } = useSelector((state) => state.getUsers);
 
 
   // Obtener la id del usuario. 
-  const [id, setId ] = useState(0);
+  const [id, setId] = useState(0);
   const gridRef = useRef();
   const onSelectionChanged = useCallback(() => {
     const selectedRows = gridRef.current.api.getSelectedRows();
@@ -29,7 +29,7 @@ export default function Usuarios({showForm, idUserEdit}) {
     console.log(selectedRows[0].idUsuario);
     setId(selectedRows[0].idUsuario);
     console.log(id)
-    
+
   }, []);
 
 
@@ -46,6 +46,9 @@ export default function Usuarios({showForm, idUserEdit}) {
     { field: 'primerApellido', headerName: 'Primer Apellido' },
     { field: 'segundoApellido', headerName: 'Segundo Apellido' },
     { field: 'fechaNacimiento', headerName: 'Fecha de Nacimiento' },
+    { field: 'genero', headerName: 'Genero' },
+    { field: 'correo', headerName: 'Correo' },
+    { field: 'telefono', headerName: 'Telefono' },
     { field: 'nombreUsuario', headerName: 'Nombre de Usuario' },
     { field: 'contraseña', headerName: 'Contraseña' },
     { field: 'habilitado', headerName: 'Habilitado' },
@@ -56,25 +59,35 @@ export default function Usuarios({showForm, idUserEdit}) {
 
   const handleNew = () => {
     showForm();
-    // id(0);
+    idUserEdit(0);
   };
 
   const handleEdit = () => {
-      if(id){
-          showForm();
-      }else{
-          alert('Seleccione un usuario para modificar');
-      }
+    if (id) {
+      idUserEdit(id);
+      showForm();
+    } else {
+      alert('Seleccione un usuario para modificar');
+    }
   };
 
-const handleDelete = () => {
-  console.log(id);
+  // const handleEdit = () => {
+  //     console.log(id);
+  //     if(id){
+  //         showForm();
+  //     }else{
+  //         alert('Seleccione un usuario para modificar');
+  //     }
+  // };
+
+  const handleDelete = () => {
+    console.log(id);
     if (id) {
       // Eliminar usuario seleccionado
       dispatch(deleteUser(id))
-      .then(() => {
-        window.location.href = window.location.href;
-      })
+        .then(() => {
+          window.location.href = window.location.href;
+        })
     } else {
       alert("Seleccione un usuario para eliminar");
     }

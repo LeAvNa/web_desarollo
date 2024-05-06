@@ -45,10 +45,10 @@ export const getUserUnique = createAsyncThunk("users/getUserUnique",
 );
 
 export const addUser = createAsyncThunk("users/addUser",
-    async (data, {rejectWithValue}) => {
+    async (user, {rejectWithValue}) => {
         try
         {      
-            const resp = await axios.post('http://187.189.158.186:7777/Usuario', data);
+            const resp = await axios.post('http://187.189.158.186:7777/Usuario', user);
 
             return resp.data;
         } 
@@ -64,6 +64,21 @@ export const deleteUser = createAsyncThunk("users/deleteUser",
         try
         {      
             const resp = await axios.delete('http://187.189.158.186:7777/Usuario/'+id);
+
+            return resp.data;
+        } 
+        catch (error) 
+        {
+            return rejectWithValue(`Error: ${error.message}`);
+        }
+    }
+);
+
+export const editUSer = createAsyncThunk("users/editUSer",
+    async (data, {rejectWithValue}) => {
+        try
+        {      
+            const resp = await axios.put('http://187.189.158.186:7777/Usuario/'+data.id, data);
 
             return resp.data;
         } 
